@@ -1,0 +1,4 @@
+.displaynon{display:none}
+#moneyscontainer{width:98%;position:absolute;left:1%}
+table#moneys th,table#moneys td p{white-space:nowrap}
+table#moneys td p span{white-space:auto}

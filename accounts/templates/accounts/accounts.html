@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xml:lang="ja" lang="ja">
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>jQuery-Ajax-Event-Calendar</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./css/style.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script type="text/javascript" src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
+<script type='text/javascript' src="./js/ajax-event-calendar.js"></script>
+</head>
+<body>
+<div id="wrapper">
+    <header id="header">
+        <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">jQuery-Ajax-Event-Calendar</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="https://github.com/RenHuuka/jQuery-Ajax-Event-Calendar" title="GitHub"><i class="fa fa-github"></i> GitHub</a></li>
+                    </ul>
+                </div>
+                
+            </div>
+        </nav>
+    </header>
+    <article id="contents" class="container">
+        <div class="row">
+    <div id="move_controls" class="btn-group">
+        <button type="button" class="btn btn-default prev"><i class="fa fa-chevron-left"></i></button>
+        <button type="button" class="btn btn-default next"><i class="fa fa-chevron-right"></i></button>
+    </div>
+    <div id="period_controls" class="text-right btn-group">
+        <button type="button" class="btn btn-default" data-months="12">Year</button>
+        <button type="button" class="btn btn-default" data-months="3">3 Month</button>
+        <button type="button" class="btn btn-default" data-months="1">1 Month</button>
+    </div>
+<h3 class="text-center year"></h3>
+<p class="displaynon" id="move_now" data-now="0"></p>
+<div id="moneyscontainer" class="table-responsive">
+<table id="moneys" class="table table-striped table-bordered table-hover"></table>
+</div>
+<!-- Add_Money -->
+<div class="modal fade" id="Add_Money" tabindex="-1" role="dialog" aria-labelledby="Add_MoneyLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="Add_MoneyLabel">入出金を追加</h4>
+            </div>
+            <div class="modal-body">
+                <form id="Add_Money_Form" action="/money/1/?action=add_money" method="post" accept-charset="utf-8" class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="AddInputDate" class="col-sm-4 control-label"><i class="fa fa-asterisk"></i> 日時</label>
+                        <div class="col-sm-8">
+                            <input type="date" class="form-control" id="AddInputDate" placeholder="2020-04-08" name="date" value="" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="AddSelectItem" class="col-sm-4 control-label"><i class="fa fa-asterisk"></i> 項目</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="AddSelectItem" name="item_id">
+                                <option value="29">市民税</option>
+                                <option value="31">車検</option>
+                                <option value="32">自動車税</option>
+                                <option value="33">国民年金</option>
+                                <option value="35">自動車保険</option>
+                            </select>
+                            <p>選択すると自動で入出金額の部分にデフォルト値がそれぞれの入ります。<br />（Ajaxで取得してフォームにデータを設定。）<p>このページでは割愛</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="AddInputAmmount" class="col-sm-4 control-label">入出金額</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="AddInputAmmount" placeholder="5000" name="ammount" value="" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="AddInputSummary" class="col-sm-4 control-label">概要</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="AddInputSummary" placeholder="煙草" name="summary" value="" />
+                        </div>
+                    </div>
+                </form>
+                    <button id="Add_Money_Submit" type="submit" class="btn btn-primary">入出金を追加</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Update_Money -->
+<div class="modal fade" id="Update_Money" tabindex="-1" role="dialog" aria-labelledby="Update_MoneyLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="Update_MoneyLabel">入出金を編集</h4>
+            </div>
+            <div class="modal-body">
+                <form id="Update_Money_Form" action="/money/1/?action=update_money" method="post" accept-charset="utf-8" class="form-horizontal" role="form">
+                    <input type="hidden" name="money_id" id="EditMoneyID" value="" required />
+                    <div class="form-group">
+                        <label for="InputDate" class="col-sm-4 control-label"><i class="fa fa-asterisk"></i> 日時</label>
+                        <div class="col-sm-8">
+                            <input type="date" class="form-control" id="InputDate" placeholder="2020-04-08" name="date" value="" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="SelectItem" class="col-sm-4 control-label"><i class="fa fa-asterisk"></i> 項目</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="SelectItem" name="item_id">
+                                <option value="29">市民税</option>
+                                <option value="31">車検</option>
+                                <option value="32">自動車税</option>
+                                <option value="33">国民年金</option>
+                                <option value="35">自動車保険</option>
+                            </select>
+                            <p>選択すると自動で入出金額の部分にデフォルト値がそれぞれの入ります。<br />（Ajaxで取得してフォームにデータを設定。）<p>このページでは割愛</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="InputAmmount" class="col-sm-4 control-label">入出金額</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="InputAmmount" placeholder="5000" name="ammount" value="" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="InputSummary" class="col-sm-4 control-label">概要</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="InputSummary" placeholder="煙草" name="summary" value="" />
+                        </div>
+                    </div>
+                </form>
+                    <button id="Update_Money_Submit" type="submit" class="btn btn-primary">入出金を編集</button>
+                <hr />
+                <form id="Delete_Money_Form" action="/money/1/?action=delete_money" method="post" accept-charset="utf-8" class="form-horizontal" role="form">
+                    <input type="hidden" name="money_id" id="DeleteMoneyID" value="" required />
+                </form>
+                    <button id="Delete_Money_Submit" type="submit" class="btn btn-danger">入出金を削除</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+    </article>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</div>
+</body>
+</html>
