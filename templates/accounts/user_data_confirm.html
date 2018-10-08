@@ -1,0 +1,17 @@
+     
+    {% extends "accounts/base.html" %}
+    {% block content %}
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+            {{ field.value }}
+        </div>
+        {% endfor %}
+     
+        <a href="{% url 'accounts:user_data_input' %}" class="btn btn-primary btn-lg">ñﬂÇÈ</a>
+        <hr>
+        <form action="{% url 'accounts:user_data_create' %}" method="POST">
+            <button type="submit" class="btn btn-primary btn-lg">ëóêM</button>
+            {% csrf_token %}
+        </form>
+    {% endblock %}

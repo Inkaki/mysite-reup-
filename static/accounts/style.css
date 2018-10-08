@@ -1,16 +1,37 @@
 .displaynon{
-display:none;
+  display:none;
 }
 
+/* wraper */
+#wrapper{
+  position: relative;
+}
+/* table */
 #moneyscontainer{
-width:98%;
-position:absolute;
-left:1%;
+  width:98%;
+  position:absolute;
+  left:1%;
 }
+table{
+  margin-top: 10px;
+  margin-bottom: 10px;
 
-table#moneys th,table#moneys td p{
-white-space:nowrap;
 }
+table#moneys th,table#moneys td p{
+  text-align: center;
+  padding-left: auto;
+  padding-right: auto;
+  height: 20px;
+  width: 30px;
+  white-space:nowrap;
+  }
 table#moneys td p span{
-white-space:auto;
+  white-space:auto;
+}
+.btn{
+  font-style: normal;
+  font-weight: bold;
+  color:#ffffff;
+  background-color: #009900;
+  border:solid 1px #00CC00;
 }

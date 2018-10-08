@@ -49,6 +49,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+ 	
+SESSION_ENGINE = 'django.contrib.sessions.backends.file'
 
 ROOT_URLCONF = 'mysite.urls'
 
@@ -128,3 +130,7 @@ SETTINGS_PATH = os.path.normpath(os.path.dirname(__file__))
 TEMPLATE_DIRS = ( 	
 os.path.join(SETTINGS_PATH, 'templates'), 	
 )
+
+LOGIN_URL='/login'
+LOGIN_REDIRECT_URL=''
+LOGOUT_REDIRECT_URL='/login'
