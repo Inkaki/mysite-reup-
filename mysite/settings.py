@@ -52,6 +52,8 @@ MIDDLEWARE = [
  	
 SESSION_ENGINE = 'django.contrib.sessions.backends.file'
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 ROOT_URLCONF = 'mysite.urls'
 
 TEMPLATES = [
@@ -132,5 +134,5 @@ os.path.join(SETTINGS_PATH, 'templates'),
 )
 
 LOGIN_URL='/login'
-LOGIN_REDIRECT_URL=''
+LOGIN_REDIRECT_URL= '/' 
 LOGOUT_REDIRECT_URL='/login'

@@ -17,6 +17,12 @@ from .forms import (
     MyPasswordResetForm, MySetPasswordForm
 )
 
+from django.contrib.auth.models import User
+from django.core.mail import send_mail, EmailMessage
+from django.shortcuts import render, redirect
+from django.template.loader import get_template
+from django.views.decorators.http import require_POST
+
 
 User = get_user_model()
 
@@ -171,3 +177,76 @@ class PasswordResetConfirm(PasswordResetConfirmView):
 class PasswordResetComplete(PasswordResetCompleteView):
     """新パスワード設定しましたページ"""
 template_name = 'accounts/password_reset_complete.html'
+
+class chart(generic.TemplateView):
+	"""グラフ、インフォグラフィック建設予定"""	
+	template_name = 'accounts/chart.html'
+
+class money_literacy(generic.TemplateView):
+	"""マネーリテラシー（収支の概念、クレジットカード、投資、節約術）ソースのリンクを張る予定"""	
+	template_name = 'accounts/literacy.html'
+
+def mail1(request):
+    subject = "題名"
+    message = "本文\\nです"
+    from_email = "inukaielms181@eis.hokudai.ac.jp"
+    # 宛先を変えたい場合は、このリストの中を変更しましょう。このアドレスは私のアドレスです。
+    # たまにメールが届きます。ちょっとほんわかします。
+    recipient_list = [
+        "inukaielms181@eis.hokudai.ac.jp"
+    ]
+ 
+    send_mail(subject, message, from_email, recipient_list)
+    return render(request, 'accounts/base.html')
+ 
+ 
+def mail2(request):
+    subject = "題名"
+    message = "本文\\nです"
+    # ログインユーザーなら、request.userでUserモデルインスタンスが取得できます
+    user = User.objects.get(email="toritoritorina@gmail.com")
+    user.email_user(subject, message)  # メールの送信
+ 
+    from_email = "inukaielms181@eis.hokudai.ac.jp"
+    user.email_user(subject, message, from_email)  # メールの送信
+    return render(request, 'accounts/base.html')
+ 
+ 
+def mail3(request):
+    subject = "題名"
+    message = "本文\\nです"
+    from_email = settings.EMAIL_HOST_USER
+    recipient_list = [
+        "inukaielms181@eis.hokudai.ac.jp"
+    ]
+    send_mail(subject, message, from_email, recipient_list)
+    return render(request, 'accounts/base.html')
+ 
+ 
+def mail4(request):
+    subject = "題名"
+    message = "本文\\nです"
+    from_email = settings.EMAIL_HOST_USER
+    to = ["inukaielms181@eis.hokudai.ac.jp"]
+    bcc = ["inukaielms181@eis.hokudai.ac.jp"]
+    email = EmailMessage(subject, message, from_email, to, bcc)
+    email.send()
+    return render(request, 'accounts/base.html')
+ 
+ 
+def mail5(request):
+    subject = "題名"
+ 
+    mail_template = get_template('accounts/mailtemplate/mail.txt')
+    user = User.objects.get(pk=1)  # is_superuser=True 等もよく使う
+    context = {
+        "user": user,
+    }
+    message = mail_template.render(context)
+ 
+    from_email = settings.EMAIL_HOST_USER
+    recipient_list = [
+        "inukaielms181@eis.hokudai.ac.jp"
+    ]
+    send_mail(subject, message, from_email, recipient_list)
+    return render(request, 'accounts/base.html')

@@ -33,5 +33,6 @@ table#moneys td p span{
   font-weight: bold;
   color:#ffffff;
   background-color: #009900;
-  border:solid 1px #00CC00;
+  border:solid 1px #28a745;
+  border-radius: 5px;
 }

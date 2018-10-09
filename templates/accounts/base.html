@@ -9,12 +9,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
           integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 
-    <title>会員登録サンプル</title>
+    <title>家計簿アプリになる予定</title>
 </head>
 <body>
     <!-- ナビバー -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="{% url 'accounts:top' %}">ホームページ名</a>
+      <a class="navbar-brand" href="{% url 'accounts:top' %}">家計簿おじさん</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -33,6 +33,12 @@
           </li>
           <li>
             <a class="nav-item nav-link" href="{% url 'accounts:password_change' %}">パスワードの変更</a>
+          </li>
+          <li>
+            <a class="nav-item nav-link" href="{% url 'accounts:chart' %}">お金の健康診断</a>
+          </li>
+          <li>
+            <a class="nav-item nav-link" href="{% url 'accounts:money_literacy' %}">マネーリテラシー</a>
           </li>
           {% else %}
           <li class="nav-item">
