@@ -179,11 +179,11 @@ class PasswordResetComplete(PasswordResetCompleteView):
 template_name = 'accounts/password_reset_complete.html'
 
 class chart(generic.TemplateView):
-	"""グラフ、インフォグラフィック建設予定"""	
+	"""グラフ、インフォグラフィック建設"""	
 	template_name = 'accounts/chart.html'
 
 class money_literacy(generic.TemplateView):
-	"""マネーリテラシー（収支の概念、クレジットカード、投資、節約術）ソースのリンクを張る予定"""	
+	"""マネーリテラシー（収支の概念、クレジットカード、投資、節約術）ソースのリンクを張る。"""	
 	template_name = 'accounts/literacy.html'
 
 def mail1(request):

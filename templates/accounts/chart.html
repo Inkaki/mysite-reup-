@@ -1,4 +1,92 @@
 {% extends "accounts/base.html" %}
-<div id = cotainer>
-<p>draw graphs here</p></div>
+{% block content %}
+<canvas id = 'my_chart_1'>
+canvas not supported..
+</canvas>
+<canvas id = 'my_chart_2'>
+canvas not supported...
+</canvas>
+<canvas id = 'my_chart_3'>
+canvas not supported...
+</canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js">
+</script>
+<script>
+// pie chart
+(function(){
+  'use strict';
+
+  var type = 'pie';
+  var data = {
+    label: ['consumption', 'waste', 'investment'],
+    datasets: [{
+      data: [122, 53, 33],
+      backgroundColor: ['tomato','gray', 'skyblue']
+    }]
+  };
+  var options = {
+    cutoutPercentage: 40
+  };
+  var ctx = document.getElementById('my_chart_1').getContext('2d')
+  var myChart = new Chart(ctx, {
+    type: type,
+    data: data,
+    options: options
+  });
+})();
+
+// compolexed
+(function(){
+  'use strict';
+
+  var type = 'bar';
+  var data = {
+    labels: [2010, 2011, 2012, 2013],
+    datasets: [{
+      label: 'income',
+      data: [120, 300, 200, 210],
+			borderColor: 'green',
+			backgroundColor: 'lightgreen'
+    },{
+      label: 'payOut',
+      data: [1800, 2500, 3020, 4200],
+			borderColor: 'tomato',
+			backgroundColor: 'pink',
+      fill:false,
+      type: 'line'
+    }]
+  };
+  var options = {
+    scales:{
+      yAxes: [{
+        ticks: {
+          suggestedMin: 0,
+          suggestedMax: 400,
+        },
+        id: 'income-axes',
+        type: 'linear',
+        position: 'left'
+      },{
+        ticks: {
+          suggestedMin: 0,
+          suggestedMax: 4000,
+        },
+        id: 'payOut-axes',
+        type: 'linear',
+        position: 'right',
+        gridLines: {
+          display: false
+        }
+      }]
+    }
+  };
+  var ctx = document.getElementById('my_chart_2').getContext('2d')
+  var myChart = new Chart(ctx, {
+    type: type,
+    data: data,
+    options: options
+  });
+})();
+</script>
+
 {% endblock %}
